@@ -4,7 +4,7 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-const handler: Handler = async () => {
+const handler: Handler = async (event) => {
   const client: mongoDB.MongoClient = new mongoDB.MongoClient(
     // @ts-expect-error fix
     process.env.DB_CONN_STRING
@@ -16,18 +16,13 @@ const handler: Handler = async () => {
 
   const collection: mongoDB.Collection = db.collection("scores");
 
-  const cursor = collection.find();
-
-  const scores = [] as mongoDB.WithId<mongoDB.BSON.Document>[];
-  for await (const doc of cursor) {
-    scores.push(doc);
-  }
+  await collection.insertMany(JSON.parse(event.body || ""));
 
   await client.close();
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ scores: scores }),
+    body: JSON.stringify({ message: "ok" }),
   };
 };
 

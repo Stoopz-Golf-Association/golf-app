@@ -5,12 +5,32 @@ import { NumPlayers } from "./components/NumPlayers";
 import { SelectPlayers } from "./components/SelectPlayers";
 import { PlayerScores } from "./components/PlayerScores";
 import { PlayerTable } from "./components/PlayerTable";
+import { PlayerScore } from "./components/PlayerTable";
+import axios from "axios";
 
 function App() {
   const [step, setStep] = useState(1);
   const [numPlayers, setNumPlayers] = useState<string>();
   const [playerNames, setPlayerNames] = useState<string[]>([]);
   const [playerScores, setPlayerScores] = useState<{ [key: string]: string }>();
+  const [allPlayerScores, setAllPlayerScores] = useState<PlayerScore[]>([]);
+
+  const handleSubmit = async () => {
+    let isValid = true;
+    for (const player in playerScores) {
+      const input = playerScores[player];
+      if (!Number(input) || Number(input) < 55 || Number(input) > 150) {
+        isValid = false;
+      }
+    }
+    if (isValid) {
+      const payload = Object.keys(playerScores || {}).map((player) => {
+        return { player: player, score: playerScores?.[player] };
+      });
+      await axios.post(`/.netlify/functions/postScores `, payload);
+      setStep((prevStep) => prevStep + 1);
+    }
+  };
 
   const handleNext = () => {
     if (step === 1 && numPlayers) {
@@ -18,16 +38,6 @@ function App() {
     }
     if (step === 2 && playerNames.length === Number(numPlayers)) {
       setStep((prevStep) => prevStep + 1);
-    }
-    if (step === 3) {
-      let isValid = true;
-      for (const player in playerScores) {
-        const input = playerScores[player];
-        if (!Number(input) || Number(input) < 55 || Number(input) > 150) {
-          isValid = false;
-        }
-      }
-      if (isValid) setStep((prevStep) => prevStep + 1);
     }
   };
   const handleBack = () => {
@@ -54,7 +64,12 @@ function App() {
         />
       )}
 
-      {step === 4 && <PlayerTable playerScores={playerScores} />}
+      {step === 4 && (
+        <PlayerTable
+          allPlayerScores={allPlayerScores}
+          setAllPlayerScores={setAllPlayerScores}
+        />
+      )}
 
       <Center maw={400} h={50}>
         <Group justify="center">
@@ -71,7 +86,7 @@ function App() {
           )}
 
           {step === 3 && (
-            <Button variant="filled" onClick={handleNext}>
+            <Button variant="filled" onClick={handleSubmit}>
               Submit
             </Button>
           )}
