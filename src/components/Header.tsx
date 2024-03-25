@@ -31,7 +31,7 @@ export function Header() {
 
           <Group h="100%" gap={0} visibleFrom="sm">
             <a href="/" className={classes.link}>
-              View Scores
+              Leaderboard
             </a>
 
             <a href="/inputscore" className={classes.link}>
