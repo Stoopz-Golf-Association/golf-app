@@ -1,5 +1,5 @@
-import { MultiSelect } from "@mantine/core";
-import { Dispatch, SetStateAction } from "react";
+import { MultiSelect } from '@mantine/core';
+import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
   numPlayers: string | undefined;
@@ -12,7 +12,16 @@ function SelectPlayers({ numPlayers, playerNames, setPlayerNames }: Props) {
     <MultiSelect
       label="Select Players"
       placeholder="Select Players"
-      data={["Sam", "JP", "Boosh", "Boux"]}
+      data={[
+        'Stokes',
+        'JP',
+        'Boosh',
+        'Boux',
+        'Logan',
+        'Jesse',
+        'Sammy T',
+        'Cojack',
+      ]}
       maxValues={Number(numPlayers)}
       value={playerNames}
       onChange={setPlayerNames}
