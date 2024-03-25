@@ -1,17 +1,14 @@
-import { useEffect, Dispatch, SetStateAction } from "react";
-import axios from "axios";
-import { Table } from "@mantine/core";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Table } from '@mantine/core';
 
-type Props = {
-  allPlayerScores: PlayerScore[];
-  setAllPlayerScores: Dispatch<SetStateAction<PlayerScore[]>>;
-};
-export type PlayerScore = {
+type PlayerScore = {
   player: string;
   score: string;
 };
 
-function PlayerTable({ allPlayerScores, setAllPlayerScores }: Props) {
+function PlayerTable() {
+  const [allPlayerScores, setAllPlayerScores] = useState<PlayerScore[]>([]);
   useEffect(() => {
     (async () => {
       const result = await axios.get(`/.netlify/functions/getScores `);
@@ -19,7 +16,7 @@ function PlayerTable({ allPlayerScores, setAllPlayerScores }: Props) {
     })();
   }, [setAllPlayerScores]);
 
-  const rows = allPlayerScores.map((player) => (
+  const rows = allPlayerScores?.map((player) => (
     <Table.Tr>
       <Table.Td>{player.player}</Table.Td>
       <Table.Td>{player.score}</Table.Td>

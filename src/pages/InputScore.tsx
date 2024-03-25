@@ -1,19 +1,17 @@
-import "./App.css";
+import { useNavigate } from "react-router-dom";
 import { Center, Button, Group } from "@mantine/core";
+import { NumPlayers } from "../components/NumPlayers";
+import { SelectPlayers } from "../components/SelectPlayers";
+import { PlayerScores } from "../components/PlayerScores";
 import { useState } from "react";
-import { NumPlayers } from "./components/NumPlayers";
-import { SelectPlayers } from "./components/SelectPlayers";
-import { PlayerScores } from "./components/PlayerScores";
-import { PlayerTable } from "./components/PlayerTable";
-import { PlayerScore } from "./components/PlayerTable";
 import axios from "axios";
 
-function App() {
+function InputScore() {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [numPlayers, setNumPlayers] = useState<string>();
   const [playerNames, setPlayerNames] = useState<string[]>([]);
   const [playerScores, setPlayerScores] = useState<{ [key: string]: string }>();
-  const [allPlayerScores, setAllPlayerScores] = useState<PlayerScore[]>([]);
 
   const handleSubmit = async () => {
     let isValid = true;
@@ -28,7 +26,7 @@ function App() {
         return { player: player, score: playerScores?.[player] };
       });
       await axios.post(`/.netlify/functions/postScores `, payload);
-      setStep((prevStep) => prevStep + 1);
+      navigate("/playertable");
     }
   };
 
@@ -64,13 +62,6 @@ function App() {
         />
       )}
 
-      {step === 4 && (
-        <PlayerTable
-          allPlayerScores={allPlayerScores}
-          setAllPlayerScores={setAllPlayerScores}
-        />
-      )}
-
       <Center maw={400} h={50}>
         <Group justify="center">
           {step !== 1 && (
@@ -96,4 +87,4 @@ function App() {
   );
 }
 
-export default App;
+export default InputScore;

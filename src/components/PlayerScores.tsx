@@ -1,7 +1,7 @@
 import { TextInput } from "@mantine/core";
 import { Dispatch, SetStateAction } from "react";
 
-type Props = {
+export type Props = {
   playerNames: string[];
   playerScores: { [key: string]: string } | undefined;
   setPlayerScores: Dispatch<
