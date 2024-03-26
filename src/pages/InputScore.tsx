@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import { Center, Button, Group } from "@mantine/core";
-import { NumPlayers } from "../components/NumPlayers";
-import { SelectPlayers } from "../components/SelectPlayers";
-import { PlayerScores } from "../components/PlayerScores";
-import { useState } from "react";
-import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import { Center, Button, Group } from '@mantine/core';
+import { NumPlayers } from '../components/NumPlayers';
+import { SelectPlayers } from '../components/SelectPlayers';
+import { PlayerScores } from '../components/PlayerScores';
+import { useState } from 'react';
+import axios from 'axios';
 
 function InputScore() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ function InputScore() {
         return { player: player, score: playerScores?.[player] };
       });
       await axios.post(`/.netlify/functions/postScores `, payload);
-      navigate("/playertable");
+      navigate('/');
     }
   };
 
