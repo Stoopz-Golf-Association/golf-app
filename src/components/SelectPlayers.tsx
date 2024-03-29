@@ -9,6 +9,7 @@ type Props = {
 
 function SelectPlayers({ numPlayers, playerNames, setPlayerNames }: Props) {
   return (
+    // <Center maw={400} h={100} bg="var(--mantine-color-gray-light)">
     <MultiSelect
       label="Select Players"
       placeholder="Select Players"
@@ -26,6 +27,7 @@ function SelectPlayers({ numPlayers, playerNames, setPlayerNames }: Props) {
       value={playerNames}
       onChange={setPlayerNames}
     />
+    // </Center>
   );
 }
 export { SelectPlayers };

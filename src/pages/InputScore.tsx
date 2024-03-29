@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Center, Button, Group } from '@mantine/core';
+import { Stack, Button, Group } from '@mantine/core';
 import { NumPlayers } from '../components/NumPlayers';
 import { SelectPlayers } from '../components/SelectPlayers';
 import { PlayerScores } from '../components/PlayerScores';
@@ -43,26 +43,26 @@ function InputScore() {
   };
   return (
     <>
-      {step === 1 && (
-        <NumPlayers numPlayers={numPlayers} setNumPlayers={setNumPlayers} />
-      )}
-      {step === 2 && (
-        <SelectPlayers
-          numPlayers={numPlayers}
-          playerNames={playerNames}
-          setPlayerNames={setPlayerNames}
-        />
-      )}
+      <Stack h={300} bg="var(--mantine-color-body)" align="center">
+        {step === 1 && (
+          <NumPlayers numPlayers={numPlayers} setNumPlayers={setNumPlayers} />
+        )}
+        {step === 2 && (
+          <SelectPlayers
+            numPlayers={numPlayers}
+            playerNames={playerNames}
+            setPlayerNames={setPlayerNames}
+          />
+        )}
 
-      {step === 3 && (
-        <PlayerScores
-          playerNames={playerNames}
-          playerScores={playerScores}
-          setPlayerScores={setPlayerScores}
-        />
-      )}
+        {step === 3 && (
+          <PlayerScores
+            playerNames={playerNames}
+            playerScores={playerScores}
+            setPlayerScores={setPlayerScores}
+          />
+        )}
 
-      <Center maw={400} h={50}>
         <Group justify="center">
           {step !== 1 && (
             <Button variant="outline" onClick={handleBack}>
@@ -82,7 +82,7 @@ function InputScore() {
             </Button>
           )}
         </Group>
-      </Center>
+      </Stack>
     </>
   );
 }

@@ -1,5 +1,5 @@
-import { TextInput } from "@mantine/core";
-import { Dispatch, SetStateAction } from "react";
+import { TextInput } from '@mantine/core';
+import { Dispatch, SetStateAction } from 'react';
 
 export type Props = {
   playerNames: string[];
@@ -12,6 +12,7 @@ export type Props = {
 function PlayerScores({ playerNames, playerScores, setPlayerScores }: Props) {
   return playerNames.map((player: string) => {
     return (
+      // <Center maw={400} h={100} bg="var(--mantine-color-gray-light)">
       <TextInput
         min={10}
         max={20}
@@ -27,6 +28,7 @@ function PlayerScores({ playerNames, playerScores, setPlayerScores }: Props) {
         }
         value={playerScores && playerScores[player]}
       />
+      // </Center>
     );
   });
 }

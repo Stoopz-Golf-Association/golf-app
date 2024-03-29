@@ -18,14 +18,18 @@ export function Header() {
     useDisclosure(false);
 
   return (
-    <Box pb={120}>
+    <Box pb={50}>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
           <a href="/" className={classes.link}>
             <img
-              src="/images/SGABouxDoubleOutline.png"
+              src="/images/SGABouxBlue.png"
               alt="SGA"
               className={classes.boux}
+              style={{
+                height: 50,
+                width: 100,
+              }}
             />
           </a>
 
