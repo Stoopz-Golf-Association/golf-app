@@ -17,109 +17,44 @@ function PlayerTable() {
   }, [setAllPlayerScores]);
   console.log(allPlayerScores);
 
-  const stokesScores: string[] = [];
-  const jpScores: string[] = [];
-  const booshScores: string[] = [];
-  const bouxScores: string[] = [];
-  const loganScores: string[] = [];
-  const sammyTScores: string[] = [];
-  const jesseScores: string[] = [];
-  const cojackScores: string[] = [];
-
-  const filteredScores = allPlayerScores.filter((player) => {
-    if (player.player === 'Stokes') {
-      stokesScores.push(player.score);
-      return true;
-    } else if (player.player === 'JP') {
-      jpScores.push(player.score);
-      return true;
-    } else if (player.player === 'Boosh') {
-      booshScores.push(player.score);
-      return true;
-    } else if (player.player === 'Boux') {
-      bouxScores.push(player.score);
-      return true;
-    } else if (player.player === 'Logan') {
-      loganScores.push(player.score);
-      return true;
-    } else if (player.player === 'Sammy T') {
-      sammyTScores.push(player.score);
-      return true;
-    } else if (player.player === 'Jesse') {
-      jesseScores.push(player.score);
-      return true;
-    } else if (player.player === 'Cojack') {
-      cojackScores.push(player.score);
-      return true;
+  const groupedScores = allPlayerScores.reduce((acc, curr) => {
+    if (!acc[curr.player]) {
+      acc[curr.player] = [];
     }
-    return false;
+    acc[curr.player].push(curr.score);
+    return acc;
+  }, {});
+
+  const playerNames = Object.keys(groupedScores).map((player) => {
+    const scores = groupedScores[player];
+    const score =
+      scores.reduce((acc, curr) => acc + Number(curr), 0) / scores.length;
+    return {
+      player,
+      score,
+      rounds: scores.length,
+    };
   });
 
-  const stokesAvg =
-    stokesScores.reduce((a, b) => a + Number(b), 0) / stokesScores.length;
+  const rows = playerNames
+    ?.sort((a, b) => {
+      if (isNaN(a.score)) {
+        return isNaN(b.score) ? 1 : b.score;
+      } else {
+        return isNaN(b.score) ? -1 : a.score - b.score;
+      }
+    })
+    .map((player, index) => (
+      <Table.Tr>
+        <Table.Td>{index + 1}</Table.Td>
+        <Table.Td>{player.player}</Table.Td>
+        <Table.Td c="#119C3F">
+          {player.score ? player.score.toFixed(2) : '-'}
+        </Table.Td>
+        <Table.Td>{player.rounds}</Table.Td>
+      </Table.Tr>
+    ));
 
-  const jpAvg = jpScores.reduce((a, b) => a + Number(b), 0) / jpScores.length;
-
-  const booshAvg =
-    booshScores.reduce((a, b) => a + Number(b), 0) / booshScores.length;
-
-  const bouxAvg =
-    bouxScores.reduce((a, b) => a + Number(b), 0) / bouxScores.length;
-
-  const loganAvg =
-    loganScores.reduce((a, b) => a + Number(b), 0) / loganScores.length;
-
-  const sammyTAvg =
-    sammyTScores.reduce((a, b) => a + Number(b), 0) / sammyTScores.length;
-
-  const jesseAvg =
-    jesseScores.reduce((a, b) => a + Number(b), 0) / jesseScores.length;
-
-  const cojackAvg =
-    cojackScores.reduce((a, b) => a + Number(b), 0) / cojackScores.length;
-
-  const playerNames = [
-    {
-      player: 'Stokes',
-      score: stokesAvg,
-      rounds: stokesScores.length,
-    },
-    { player: 'JP', score: jpAvg, rounds: jpScores.length },
-    { player: 'Boosh', score: booshAvg, rounds: booshScores.length },
-    { player: 'Boux', score: bouxAvg, rounds: bouxScores.length },
-    { player: 'Logan', score: loganAvg, rounds: loganScores.length },
-    { player: 'SammyT', score: sammyTAvg, rounds: sammyTScores.length },
-    { player: 'Jesse', score: jesseAvg, rounds: jesseScores.length },
-    { player: 'Cojack', score: cojackAvg, rounds: cojackScores.length },
-  ];
-
-  const rows = playerNames?.map((player) => (
-    <Table.Tr>
-      <Table.Td></Table.Td>
-      <Table.Td>{player.player}</Table.Td>
-      <Table.Td c="#119C3F">{player.score.toFixed(2)}</Table.Td>
-      <Table.Td>{player.rounds}</Table.Td>
-    </Table.Tr>
-  ));
-
-  // const rows = allPlayerScores?.map((player) => (
-  //   <Table.Tr>
-  //     <Table.Td>{player._id}</Table.Td>
-  //     <Table.Td>{player.player}</Table.Td>
-  //     <Table.Td c="#119C3F"></Table.Td>
-  //     <Table.Td>{player.score}</Table.Td>
-  //   </Table.Tr>
-  // ));
-
-  const sortedScores = playerNames.sort(
-    (a, b) => Number(b.score) - Number(a.score)
-  );
-
-  sortedScores.forEach((player, index) => {
-    player.rank = index + 1;
-  });
-
-  console.log(sortedScores);
   return (
     <>
       <Container>
