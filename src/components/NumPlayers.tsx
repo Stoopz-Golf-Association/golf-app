@@ -15,9 +15,8 @@ function NumPlayers({
         label="How Many Players?"
         value={numPlayers}
         onChange={setNumPlayers}
-        withAsterisk
       >
-        <Group justify="center" mt="xs">
+        <Group /*justify="center"*/ mt="xs">
           <Radio value="2" label="2" />
           <Radio value="3" label="3" />
           <Radio value="4" label="4" />

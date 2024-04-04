@@ -18,7 +18,7 @@ export function Header() {
     useDisclosure(false);
 
   return (
-    <Box pb={50}>
+    <Box pb={30}>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
           <a href="/" className={classes.link}>
