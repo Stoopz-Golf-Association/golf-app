@@ -4,26 +4,37 @@ import { Table, Title, Space, Group, Stack, Container } from '@mantine/core';
 
 type PlayerScore = {
   player: string;
-  score: string;
+  score: number;
 };
 
 function PlayerTable() {
   const [allPlayerScores, setAllPlayerScores] = useState<PlayerScore[]>([]);
+
   useEffect(() => {
-    (async () => {
-      const result = await axios.get(`/.netlify/functions/getScores `);
-      setAllPlayerScores(result.data.scores);
-    })();
+    const fetchScores = async () => {
+      try {
+        const result = await axios.get(`/.netlify/functions/getScores`);
+        setAllPlayerScores(result.data.scores);
+      } catch (error) {
+        console.error('Error fetching scores:', error);
+      }
+    };
+
+    fetchScores();
   }, [setAllPlayerScores]);
+
   console.log(allPlayerScores);
 
-  const groupedScores = allPlayerScores.reduce((acc, curr) => {
-    if (!acc[curr.player]) {
-      acc[curr.player] = [];
-    }
-    acc[curr.player].push(curr.score);
-    return acc;
-  }, {});
+  const groupedScores: { [player: string]: number[] } = allPlayerScores.reduce(
+    (acc, curr) => {
+      if (!acc[curr.player]) {
+        acc[curr.player] = [];
+      }
+      acc[curr.player].push(Number(curr.score));
+      return acc;
+    },
+    {} as { [player: string]: number[] }
+  );
 
   const playerNames = Object.keys(groupedScores).map((player) => {
     const scores = groupedScores[player];
