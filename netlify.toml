@@ -2,7 +2,7 @@
   targetPort=5173
   [build]
    base = "/"
-  command = "npm run build"  
+  command = "CI= npm run build"  
   functions = "netlify/functions"
   publish = "build" 
   
