@@ -1,7 +1,10 @@
 [dev]
   targetPort=5173
   [build]
-  functions = 'netlify/functions'
+   base = "/"
+  command = "npm run build"  
+  functions = "netlify/functions"
+  publish = "build" 
   
   [[redirects]]
   from = "/*"
