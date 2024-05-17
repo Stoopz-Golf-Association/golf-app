@@ -1,16 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import InputScore from './pages/InputScore.tsx';
-import { Outlet } from 'react-router-dom';
-import { Header } from './components/Header.tsx';
 import { PlayerTable } from './pages/PlayerTable.tsx';
+import Login from './pages/Login.tsx';
+import SignUp from './pages/SignUp.tsx';
 import '@mantine/core/styles.css';
 import {
   MantineProvider,
   createTheme,
   MantineColorsTuple,
 } from '@mantine/core';
+import { PrivateRoute } from './components/PrivateRoute.tsx';
+import { create } from 'zustand';
+import '@mantine/core/styles.css';
+import { Header } from './components/Header.tsx';
+import { AuthProvider } from './components/AuthProvider.tsx';
+
+export const useStore = create((set) => ({
+  isAuthenticated: false,
+  setIsAuthenticated: (isAuthenticated: boolean) => set({ isAuthenticated }),
+  user: {},
+  setUser: (user) => set({ user }),
+}));
 
 const myColor: MantineColorsTuple = [
   '#ebf6ff',
@@ -31,25 +43,34 @@ const theme = createTheme({
   },
 });
 
-function Layout() {
-  return (
-    <>
-      <Header />
-      <Outlet />
-    </>
-  );
-}
 const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: (
+      <>
+        <Header />
+        <Outlet />
+      </>
+    ),
     children: [
       {
         path: '/inputscore',
-        element: <InputScore />,
+        element: (
+          <PrivateRoute>
+            <InputScore />
+          </PrivateRoute>
+        ),
       },
       {
         path: '/',
         element: <PlayerTable />,
+      },
+      {
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/signup',
+        element: <SignUp />,
       },
     ],
   },
@@ -58,7 +79,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <MantineProvider theme={theme}>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </MantineProvider>
   </React.StrictMode>
 );

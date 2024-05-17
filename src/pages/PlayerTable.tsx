@@ -23,8 +23,6 @@ function PlayerTable() {
     fetchScores();
   }, [setAllPlayerScores]);
 
-  console.log(allPlayerScores);
-
   const groupedScores: { [player: string]: number[] } = allPlayerScores.reduce(
     (acc, curr) => {
       if (!acc[curr.player]) {

@@ -4,6 +4,7 @@ import { NumPlayers } from '../components/NumPlayers';
 import { SelectPlayers } from '../components/SelectPlayers';
 import { PlayerScores } from '../components/PlayerScores';
 import { useState } from 'react';
+
 import axios from 'axios';
 
 function InputScore() {
@@ -25,7 +26,7 @@ function InputScore() {
       const payload = Object.keys(playerScores || {}).map((player) => {
         return { player: player, score: playerScores?.[player] };
       });
-      await axios.post(`/.netlify/functions/postScores `, payload);
+      await axios.post('/.netlify/functions/postScores', payload);
       navigate('/');
     }
   };

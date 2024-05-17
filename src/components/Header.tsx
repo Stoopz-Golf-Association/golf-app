@@ -10,12 +10,31 @@ import {
 } from '@mantine/core';
 
 import { useDisclosure } from '@mantine/hooks';
-
+import { useNavigate } from 'react-router-dom';
+import { useStore } from '../main';
 import classes from '../header.module.css';
-
+import Cookies from 'js-cookie';
 export function Header() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
+  const navigate = useNavigate();
+  const isAuthenticated = useStore((state) => state.isAuthenticated);
+  const setIsAuthenticated = useStore((state) => state.setIsAuthenticated);
+  const handleSignUpClick = () => {
+    navigate('/signup');
+  };
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
+  const handleLogOutClick = () => {
+    navigate('/');
+    Cookies.remove('auth');
+    setIsAuthenticated(false);
+
+    // document.cookie =
+    //   'userName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;=';
+  };
 
   return (
     <Box pb={30}>
@@ -44,8 +63,21 @@ export function Header() {
           </Group>
 
           <Group visibleFrom="sm">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
+            {isAuthenticated ? (
+              <Button variant="default" onClick={handleLogOutClick}>
+                Log Out
+              </Button>
+            ) : (
+              <>
+                <Button variant="default">
+                  <a href="/login" className={classes.link}>
+                    Login
+                  </a>
+                </Button>
+
+                <Button>Sign up</Button>
+              </>
+            )}
           </Group>
 
           <Burger
@@ -55,35 +87,6 @@ export function Header() {
           />
         </Group>
       </header>
-
-      <Drawer
-        opened={drawerOpened}
-        onClose={closeDrawer}
-        size="100%"
-        padding="md"
-        title="Navigation"
-        hiddenFrom="sm"
-        zIndex={1000000}
-      >
-        <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
-          <Divider my="sm" />
-
-          <a href="/" className={classes.link}>
-            View Scores
-          </a>
-
-          <a href="/inputscore" className={classes.link}>
-            Post Scores
-          </a>
-
-          <Divider my="sm" />
-
-          <Group justify="center" grow pb="xl" px="md">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
-          </Group>
-        </ScrollArea>
-      </Drawer>
     </Box>
   );
 }

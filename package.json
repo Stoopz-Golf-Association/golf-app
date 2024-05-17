@@ -16,11 +16,19 @@
     "@mantinex/mantine-logo": "^1.0.1",
     "@netlify/functions": "^2.6.0",
     "@tabler/icons-react": "^3.1.0",
+    "@types/js-cookie": "^3.0.6",
     "axios": "^1.6.8",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
+    "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.5.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "set-cookie-parser": "^2.6.0",
+    "stylelint": "^16.5.0",
+    "stylelint-scss": "^6.3.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20.11.28",
