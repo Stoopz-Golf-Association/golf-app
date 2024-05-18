@@ -1,22 +1,10 @@
-import {
-  Group,
-  Button,
-  Divider,
-  Box,
-  Burger,
-  Drawer,
-  ScrollArea,
-  rem,
-} from '@mantine/core';
+import { Group, Button, Box } from '@mantine/core';
 
-import { useDisclosure } from '@mantine/hooks';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../main';
 import classes from '../header.module.css';
 import Cookies from 'js-cookie';
 export function Header() {
-  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
-    useDisclosure(false);
   const navigate = useNavigate();
   const isAuthenticated = useStore((state) => state.isAuthenticated);
   const setIsAuthenticated = useStore((state) => state.setIsAuthenticated);
@@ -70,21 +58,19 @@ export function Header() {
             ) : (
               <>
                 <Button variant="default">
-                  <a href="/login" className={classes.link}>
+                  <a
+                    href="/login"
+                    onClick={handleLoginClick}
+                    className={classes.link}
+                  >
                     Login
                   </a>
                 </Button>
 
-                <Button>Sign up</Button>
+                <Button onClick={handleSignUpClick}>Sign up</Button>
               </>
             )}
           </Group>
-
-          <Burger
-            opened={drawerOpened}
-            onClick={toggleDrawer}
-            hiddenFrom="sm"
-          />
         </Group>
       </header>
     </Box>
