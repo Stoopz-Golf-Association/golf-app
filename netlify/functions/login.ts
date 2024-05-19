@@ -40,7 +40,7 @@ const handler: Handler = async (event) => {
         body: JSON.stringify({ error: 'User not found' }),
       };
     }
-    // Load hash from your password DB.
+
     const result = await bcrypt.compare(requestBody.password, user.password);
 
     if (!result) {

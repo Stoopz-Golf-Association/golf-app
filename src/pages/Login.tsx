@@ -26,7 +26,6 @@ function Login() {
     }
   }, [isAuthenticated, navigate]);
 
-  console.log(isAuthenticated);
   const handleSignUpClick = () => {
     navigate('/signup');
   };

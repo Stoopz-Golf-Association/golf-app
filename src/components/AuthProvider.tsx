@@ -10,10 +10,6 @@ interface User {
 
 interface AuthProviderProps {
   children: React.ReactElement;
-  isAuthenticated: boolean;
-  user: User | null;
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
-  setUser: (user: User | null) => void;
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {

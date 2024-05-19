@@ -21,7 +21,7 @@ function SignUp() {
     if (isAuthenticated) {
       navigate('/');
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async () => {
     if (password === rePassword) {
