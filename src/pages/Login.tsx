@@ -24,7 +24,7 @@ function Login() {
     if (isAuthenticated) {
       navigate('/');
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   console.log(isAuthenticated);
   const handleSignUpClick = () => {

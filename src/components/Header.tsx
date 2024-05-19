@@ -1,9 +1,9 @@
 import { Group, Button, Box } from '@mantine/core';
-
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../main';
 import classes from '../header.module.css';
 import Cookies from 'js-cookie';
+
 export function Header() {
   const navigate = useNavigate();
   const isAuthenticated = useStore((state) => state.isAuthenticated);
@@ -19,9 +19,6 @@ export function Header() {
     navigate('/');
     Cookies.remove('auth');
     setIsAuthenticated(false);
-
-    // document.cookie =
-    //   'userName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;=';
   };
 
   return (

@@ -13,15 +13,25 @@ import {
 } from '@mantine/core';
 import { PrivateRoute } from './components/PrivateRoute.tsx';
 import { create } from 'zustand';
-import '@mantine/core/styles.css';
 import { Header } from './components/Header.tsx';
 import { AuthProvider } from './components/AuthProvider.tsx';
 
-export const useStore = create((set) => ({
+interface StoreState {
+  isAuthenticated: boolean;
+  user: {
+    name?: string;
+  };
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+  setUser: (user: { name?: string }) => void;
+}
+
+export const useStore = create<StoreState>((set) => ({
   isAuthenticated: false,
   setIsAuthenticated: (isAuthenticated: boolean) => set({ isAuthenticated }),
-  user: {},
-  setUser: (user) => set({ user }),
+  user: {
+    name: undefined,
+  },
+  setUser: (user: { name?: string }) => set({ user }),
 }));
 
 const myColor: MantineColorsTuple = [
@@ -76,12 +86,18 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <MantineProvider theme={theme}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-    </MantineProvider>
-  </React.StrictMode>
-);
+const rootElement = document.getElementById('root');
+
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <MantineProvider theme={theme}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </MantineProvider>
+    </React.StrictMode>
+  );
+} else {
+  console.error('Root element not found');
+}

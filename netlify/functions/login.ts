@@ -6,10 +6,13 @@ import jwt from 'jsonwebtoken';
 
 dotenv.config();
 
+const dbConnString = process.env.DB_CONN_STRING;
+if (!dbConnString) {
+  throw new Error('DB_CONN_STRING environment variable is not defined');
+}
+
 const handler: Handler = async (event) => {
-  const client: mongoDB.MongoClient = new mongoDB.MongoClient(
-    process.env.DB_CONN_STRING
-  );
+  const client: mongoDB.MongoClient = new mongoDB.MongoClient(dbConnString);
 
   try {
     await client.connect();
