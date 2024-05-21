@@ -4,6 +4,7 @@ import { NumPlayers } from '../components/NumPlayers';
 import { SelectPlayers } from '../components/SelectPlayers';
 import { PlayerScores } from '../components/PlayerScores';
 import { useState } from 'react';
+import GolfCourse from '../components/GolfCourse';
 
 import axios from 'axios';
 
@@ -13,6 +14,7 @@ function InputScore() {
   const [numPlayers, setNumPlayers] = useState<string>();
   const [playerNames, setPlayerNames] = useState<string[]>([]);
   const [playerScores, setPlayerScores] = useState<{ [key: string]: string }>();
+  const [golfCourseName, setGolfCourseName] = useState<string>('');
 
   const handleSubmit = async () => {
     let isValid = true;
@@ -24,7 +26,11 @@ function InputScore() {
     }
     if (isValid) {
       const payload = Object.keys(playerScores || {}).map((player) => {
-        return { player: player, score: playerScores?.[player] };
+        return {
+          player: player,
+          score: playerScores?.[player],
+          golfCourseName: golfCourseName,
+        };
       });
       await axios.post('/.netlify/functions/postScores', payload);
       navigate('/');
@@ -38,16 +44,20 @@ function InputScore() {
     if (step === 2 && playerNames.length === Number(numPlayers)) {
       setStep((prevStep) => prevStep + 1);
     }
+    if (step === 3 && playerNames.length === Number(numPlayers)) {
+      setStep((prevStep) => prevStep + 1);
+    }
   };
   const handleBack = () => {
     setStep((prevStep) => prevStep - 1);
   };
   return (
     <>
-      <Stack h={300} bg="var(--mantine-color-body)" align="center">
+      <Stack h={400} bg="var(--mantine-color-body)" align="center">
         {step === 1 && (
           <NumPlayers numPlayers={numPlayers} setNumPlayers={setNumPlayers} />
         )}
+
         {step === 2 && (
           <SelectPlayers
             numPlayers={numPlayers}
@@ -57,6 +67,13 @@ function InputScore() {
         )}
 
         {step === 3 && (
+          <GolfCourse
+            golfCourseName={golfCourseName}
+            setGolfCourseName={setGolfCourseName}
+          />
+        )}
+
+        {step === 4 && (
           <PlayerScores
             playerNames={playerNames}
             playerScores={playerScores}
@@ -71,13 +88,13 @@ function InputScore() {
             </Button>
           )}
 
-          {step < 3 && (
+          {step < 4 && (
             <Button variant="filled" onClick={handleNext}>
               Next
             </Button>
           )}
 
-          {step === 3 && (
+          {step === 4 && (
             <Button variant="filled" onClick={handleSubmit}>
               Submit
             </Button>

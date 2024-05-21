@@ -1,4 +1,6 @@
 import { Autocomplete, ComboboxItem, OptionsFilter } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const optionsFilter: OptionsFilter = ({ options, search }) => {
   const splittedSearch = search.toLowerCase().trim().split(' ');
@@ -10,28 +12,43 @@ const optionsFilter: OptionsFilter = ({ options, search }) => {
   });
 };
 
-function GolfCourse() {
+interface GolfCourse {
+  setGolfCourseName: (golfCourseName: string) => void;
+  golfCourseName: string;
+}
+
+function GolfCourse({ golfCourseName, setGolfCourseName }: GolfCourse) {
+  const [golfCourseList, setGolfCourseList] = useState([]);
+
+  useEffect(() => {
+    const fetchGolfCourses = async () => {
+      try {
+        const result = await axios.get('/.netlify/functions/golfCourses');
+
+        if (result.data && Array.isArray(result.data.golfCourses)) {
+          setGolfCourseList(
+            result.data.golfCourses.map((course: { courseName: string }) => {
+              return course.courseName;
+            })
+          );
+        } else {
+          console.error('Unexpected data format:', result.data);
+        }
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      }
+    };
+
+    fetchGolfCourses();
+  }, []);
+
   return (
     <Autocomplete
       label="Golf Course"
-      placeholder="Enter Name of Golf Course"
-      data={[
-        'Jimmy Clay Golf Course',
-        'Roy Kizer Golf Course',
-        'Lions Municipal Golf Course',
-        'Riverside Golf Course',
-        'Hancock Golf Course',
-        'Morris Williams Golf Course',
-        'Harvey Penick Golf Campus',
-        'Grey Rock Golf and Tennis',
-        'Wetlands Golf Course',
-        'Les Vieux Chenes Golf Course',
-        'Farm d Allie Golf Club',
-        'Muni Lafayette Golf Course - Hebert Municipal Golf Course',
-        'Koasati Pines Golf Course',
-        'Atchafalaya Golf Course',
-        'Bayou Bend Golf Course',
-      ]}
+      placeholder="Name of Golf Course"
+      data={golfCourseList}
+      onChange={setGolfCourseName}
+      value={golfCourseName}
       filter={optionsFilter}
     />
   );
