@@ -15,28 +15,10 @@ const handler: Handler = async () => {
   });
 
   const scores = await sql`
- SELECT player, score, id FROM golfscores;
+  
+ SELECT player, score, player_id FROM golfscores;
 `;
   console.log(scores);
-  // const client: mongoDB.MongoClient = new mongoDB.MongoClient(
-  //   // @ts-expect-error fix
-  //   process.env.DB_CONN_STRING
-  // );
-
-  // await client.connect();
-
-  // const db: mongoDB.Db = client.db("golf-scores");
-
-  // const collection: mongoDB.Collection = db.collection("scores");
-
-  // const cursor = collection.find();
-
-  // const scores = [] as mongoDB.WithId<mongoDB.BSON.Document>[];
-  // for await (const doc of cursor) {
-  //   scores.push(doc);
-  // }
-
-  // await client.close();
 
   return {
     statusCode: 200,

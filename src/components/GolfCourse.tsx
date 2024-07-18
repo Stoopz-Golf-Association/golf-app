@@ -13,18 +13,11 @@ const optionsFilter: OptionsFilter = ({ options, search }) => {
 };
 
 interface GolfCourse {
-  setGolfCourseName: (golfCourseName: string) => void;
-  golfCourseName: string;
-  setPar: (par: string) => void;
-  setLocation: (location: string) => void;
+  setGolfCourse: (golfCourse: { value: string; id: number }) => void;
+  golfCourse: { value: string; id: number };
 }
 
-function GolfCourse({
-  golfCourseName,
-  setGolfCourseName,
-  setPar,
-  setLocation,
-}: GolfCourse) {
+function GolfCourse({ golfCourse, setGolfCourse }: GolfCourse) {
   const [golfCourseList, setGolfCourseList] = useState([]);
 
   useEffect(() => {
@@ -32,22 +25,15 @@ function GolfCourse({
       try {
         const result = await axios.get('/.netlify/functions/golfCourses');
 
+        console.log(result);
+
         if (result.data && Array.isArray(result.data.golfCourses)) {
           setGolfCourseList(
-            result.data.golfCourses.map((course: { course_name: string }) => {
-              return course.course_name;
-            })
-          );
-
-          setLocation(
-            result.data.golfCourses.map((location: { location: string }) => {
-              return location.location;
-            })
-          );
-          setPar(
-            result.data.golfCourse.map((par: { par: string }) => {
-              return par.par;
-            })
+            result.data.golfCourses.map(
+              (course: { course_name: string; golfcourse_id: number }) => {
+                return { value: course.course_name, id: course.golfcourse_id };
+              }
+            )
           );
         } else {
           console.error('Unexpected data format:', result.data);
@@ -65,8 +51,13 @@ function GolfCourse({
       label="Golf Course"
       placeholder="Name of Golf Course"
       data={golfCourseList}
-      onChange={setGolfCourseName}
-      value={golfCourseName}
+      onChange={(value) => {
+        const course = golfCourseList.find(
+          (golfCourse: { value: string }) => golfCourse.value === value
+        );
+        setGolfCourse(course!);
+      }}
+      value={golfCourse.value}
       filter={optionsFilter}
     />
   );

@@ -14,7 +14,7 @@ const handler: Handler = async () => {
   });
 
   const golfCourses = await sql`
-  SELECT course_name, par, location FROM golfCourses;
+  SELECT golfcourse_id, course_name, par, location FROM golfCourses;
  `;
 
   return {

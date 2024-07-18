@@ -14,9 +14,9 @@ function InputScore() {
   const [numPlayers, setNumPlayers] = useState<string>();
   const [playerNames, setPlayerNames] = useState<string[]>([]);
   const [playerScores, setPlayerScores] = useState<{ [key: string]: string }>();
-  const [golfCourseName, setGolfCourseName] = useState<string>('');
-  const [par, setPar] = useState<string>('');
-  const [location, setLocation] = useState<string>('');
+  const [golfCourse, setGolfCourse] = useState<{ value: string; id: number }>(
+    {}
+  );
 
   const handleSubmit = async () => {
     let isValid = true;
@@ -31,9 +31,7 @@ function InputScore() {
         return {
           player: player,
           score: playerScores?.[player],
-          golfCourseName: golfCourseName,
-          par: par,
-          location: location,
+          golfCourseId: golfCourse.id,
         };
       });
 
@@ -73,12 +71,7 @@ function InputScore() {
         )}
 
         {step === 3 && (
-          <GolfCourse
-            golfCourseName={golfCourseName}
-            setGolfCourseName={setGolfCourseName}
-            setPar={setPar}
-            setLocation={setLocation}
-          />
+          <GolfCourse golfCourse={golfCourse} setGolfCourse={setGolfCourse} />
         )}
 
         {step === 4 && (

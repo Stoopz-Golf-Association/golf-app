@@ -21,12 +21,13 @@ const handler: Handler = async (event) => {
       rejectUnauthorized: false,
     },
   });
+  console.log(event);
 
   for await (const score of scores) {
     await sql`
-    INSERT INTO golfscores (player, score)
+    INSERT INTO golfscores (player, score, golfcourse_id)
     values
-  (${score.player}, ${score.score})
+  (${score.player}, ${score.score},  ${score.golfCourseId})
    `;
   }
 
