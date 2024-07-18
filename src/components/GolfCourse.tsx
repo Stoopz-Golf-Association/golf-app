@@ -1,4 +1,4 @@
-import { Autocomplete, ComboboxItem, OptionsFilter } from '@mantine/core';
+import { Select, ComboboxItem, OptionsFilter } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -47,7 +47,8 @@ function GolfCourse({ golfCourse, setGolfCourse }: GolfCourse) {
   }, []);
 
   return (
-    <Autocomplete
+    <Select
+      searchable
       label="Golf Course"
       placeholder="Name of Golf Course"
       data={golfCourseList}
