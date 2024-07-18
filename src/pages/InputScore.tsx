@@ -14,9 +14,10 @@ function InputScore() {
   const [numPlayers, setNumPlayers] = useState<string>();
   const [playerNames, setPlayerNames] = useState<string[]>([]);
   const [playerScores, setPlayerScores] = useState<{ [key: string]: string }>();
-  const [golfCourse, setGolfCourse] = useState<{ value: string; id: number }>(
-    {}
-  );
+  const [golfCourse, setGolfCourse] = useState<{ value: string; id: number }>({
+    value: '',
+    id: 0,
+  });
 
   const handleSubmit = async () => {
     let isValid = true;
