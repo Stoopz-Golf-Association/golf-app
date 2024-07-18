@@ -16,7 +16,7 @@ function NumPlayers({
         value={numPlayers}
         onChange={setNumPlayers}
       >
-        <Group /*justify="center"*/ mt="xs">
+        <Group justify="center" mt="xs">
           <Radio value="2" label="2" />
           <Radio value="3" label="3" />
           <Radio value="4" label="4" />

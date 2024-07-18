@@ -58,7 +58,7 @@ function InputScore() {
   };
   return (
     <>
-      <Stack h={400} bg="var(--mantine-color-body)" align="center">
+      <Stack align="center">
         {step === 1 && (
           <NumPlayers numPlayers={numPlayers} setNumPlayers={setNumPlayers} />
         )}
