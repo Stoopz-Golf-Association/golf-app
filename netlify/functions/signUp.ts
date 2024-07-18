@@ -1,5 +1,5 @@
 import { Handler } from '@netlify/functions';
-import * as mongoDB from 'mongodb';
+import postgres from 'postgres';
 import * as dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 
@@ -34,21 +34,22 @@ const handler: Handler = async (event) => {
     };
   }
 
-  const client: mongoDB.MongoClient = new mongoDB.MongoClient(
-    process.env.DB_CONN_STRING || ''
-  );
-
   try {
-    await client.connect();
-    const db: mongoDB.Db = client.db('golf-scores');
-    const collection: mongoDB.Collection = db.collection('users');
+    const sql = postgres(process.env.DB_CONN_STRING || '', {
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    });
 
     const hashedPassword = await bcrypt.hash(credentials.password, saltRounds);
 
-    await collection.insertOne({
-      userName: credentials.userName,
-      password: hashedPassword,
-    });
+    await sql`
+      insert into users
+        (username, password)
+      values
+        (${credentials.userName}, ${hashedPassword})
+      returning username, password
+    `;
 
     return {
       statusCode: 200,
@@ -60,8 +61,6 @@ const handler: Handler = async (event) => {
       statusCode: 500,
       body: JSON.stringify({ message: 'Internal Server Error' }),
     };
-  } finally {
-    await client.close();
   }
 };
 

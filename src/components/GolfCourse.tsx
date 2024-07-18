@@ -15,9 +15,16 @@ const optionsFilter: OptionsFilter = ({ options, search }) => {
 interface GolfCourse {
   setGolfCourseName: (golfCourseName: string) => void;
   golfCourseName: string;
+  setPar: (par: string) => void;
+  setLocation: (location: string) => void;
 }
 
-function GolfCourse({ golfCourseName, setGolfCourseName }: GolfCourse) {
+function GolfCourse({
+  golfCourseName,
+  setGolfCourseName,
+  setPar,
+  setLocation,
+}: GolfCourse) {
   const [golfCourseList, setGolfCourseList] = useState([]);
 
   useEffect(() => {
@@ -27,8 +34,19 @@ function GolfCourse({ golfCourseName, setGolfCourseName }: GolfCourse) {
 
         if (result.data && Array.isArray(result.data.golfCourses)) {
           setGolfCourseList(
-            result.data.golfCourses.map((course: { courseName: string }) => {
-              return course.courseName;
+            result.data.golfCourses.map((course: { course_name: string }) => {
+              return course.course_name;
+            })
+          );
+
+          setLocation(
+            result.data.golfCourses.map((location: { location: string }) => {
+              return location.location;
+            })
+          );
+          setPar(
+            result.data.golfCourse.map((par: { par: string }) => {
+              return par.par;
             })
           );
         } else {

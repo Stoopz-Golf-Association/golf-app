@@ -1,5 +1,6 @@
 import { Handler } from '@netlify/functions';
-import * as mongoDB from 'mongodb';
+
+import postgres from 'postgres';
 import * as dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -12,16 +13,30 @@ if (!dbConnString) {
 }
 
 const handler: Handler = async (event) => {
-  const client: mongoDB.MongoClient = new mongoDB.MongoClient(dbConnString);
+  if (!event.body) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: 'Bad Request: Missing event body' }),
+    };
+  }
+
+  let credentials;
+  try {
+    credentials = JSON.parse(event.body);
+  } catch (error) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: 'Bad Request: Invalid JSON' }),
+    };
+  }
+  const sql = postgres(dbConnString || '', {
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  });
 
   try {
-    await client.connect();
-
-    const db: mongoDB.Db = client.db('golf-scores');
-    const collection: mongoDB.Collection = db.collection('users');
-
-    const requestBody = JSON.parse(event.body || '{}');
-    const userName = requestBody.userName;
+    const { userName, password } = credentials;
 
     if (!userName) {
       return {
@@ -32,7 +47,12 @@ const handler: Handler = async (event) => {
       };
     }
 
-    const user = await collection.findOne({ userName });
+    const [user] = await sql`
+    SELECT * FROM users WHERE username =
+     
+      (${userName});
+   
+  `;
 
     if (!user) {
       return {
@@ -41,17 +61,15 @@ const handler: Handler = async (event) => {
       };
     }
 
-    const result = await bcrypt.compare(requestBody.password, user.password);
+    const result = await bcrypt.compare(password, user.password);
 
     if (!result) {
       return {
         statusCode: 401,
-        body: JSON.stringify({ error: 'User not found' }),
+        body: JSON.stringify({ error: 'Password incorrect' }),
       };
     }
     const token = jwt.sign({ userName: user.userName }, process.env.JWT_SECRET);
-
-    await client.close();
 
     return {
       statusCode: 200,
@@ -66,8 +84,6 @@ const handler: Handler = async (event) => {
       statusCode: 500,
       body: JSON.stringify({ error: 'Internal server error' }),
     };
-  } finally {
-    await client.close();
   }
 };
 

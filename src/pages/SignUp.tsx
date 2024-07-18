@@ -16,6 +16,8 @@ function SignUp() {
   const [rePassword, setRePassword] = useState('');
   const navigate = useNavigate();
   const isAuthenticated = useStore((state) => state.isAuthenticated);
+  const setIsAuthenticated = useStore((state) => state.setIsAuthenticated);
+  const setUser = useStore((state) => state.setUser);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -25,10 +27,16 @@ function SignUp() {
 
   const handleSubmit = async () => {
     if (password === rePassword) {
-      await axios.post(`/.netlify/functions/signUp `, {
+      const response = await axios.post(`/.netlify/functions/signUp `, {
         userName,
         password,
       });
+
+      if (response.status === 200) {
+        setIsAuthenticated(true);
+        setUser(response.data);
+        navigate('/');
+      }
     }
   };
   return (

@@ -15,6 +15,8 @@ function InputScore() {
   const [playerNames, setPlayerNames] = useState<string[]>([]);
   const [playerScores, setPlayerScores] = useState<{ [key: string]: string }>();
   const [golfCourseName, setGolfCourseName] = useState<string>('');
+  const [par, setPar] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
 
   const handleSubmit = async () => {
     let isValid = true;
@@ -30,8 +32,12 @@ function InputScore() {
           player: player,
           score: playerScores?.[player],
           golfCourseName: golfCourseName,
+          par: par,
+          location: location,
         };
       });
+
+      console.log(payload);
       await axios.post('/.netlify/functions/postScores', payload);
       navigate('/');
     }
@@ -70,6 +76,8 @@ function InputScore() {
           <GolfCourse
             golfCourseName={golfCourseName}
             setGolfCourseName={setGolfCourseName}
+            setPar={setPar}
+            setLocation={setLocation}
           />
         )}
 

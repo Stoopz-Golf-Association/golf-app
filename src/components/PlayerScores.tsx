@@ -16,9 +16,9 @@ function PlayerScores({ playerNames, playerScores, setPlayerScores }: Props) {
         min={10}
         max={20}
         radius="xs"
-        label="Input Player Score"
+        label={`Input ${player}'s Score`}
         withAsterisk
-        placeholder={`Input ${player}'s score`}
+        placeholder="ex: 72"
         onChange={(event) =>
           setPlayerScores((prevScores) => ({
             ...prevScores,

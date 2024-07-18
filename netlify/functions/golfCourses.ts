@@ -1,29 +1,21 @@
 import { Handler } from '@netlify/functions';
-import * as mongoDB from 'mongodb';
+import postgres from 'postgres';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+const dbConnString = process.env.DB_CONN_STRING;
+
 const handler: Handler = async () => {
-  const client: mongoDB.MongoClient = new mongoDB.MongoClient(
-    // @ts-expect-error fix
-    process.env.DB_CONN_STRING
-  );
+  const sql = postgres(dbConnString || '', {
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  });
 
-  await client.connect();
-
-  const db: mongoDB.Db = client.db('golf-scores');
-
-  const collection: mongoDB.Collection = db.collection('golfCourses');
-
-  const cursor = collection.find();
-
-  const golfCourses = [] as mongoDB.WithId<mongoDB.BSON.Document>[];
-  for await (const doc of cursor) {
-    golfCourses.push(doc);
-  }
-
-  await client.close();
+  const golfCourses = await sql`
+  SELECT course_name, par, location FROM golfCourses;
+ `;
 
   return {
     statusCode: 200,
