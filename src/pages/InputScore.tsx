@@ -39,7 +39,6 @@ function InputScore() {
         };
       });
 
-      console.log(payload);
       await axios.post('/.netlify/functions/postScores', payload);
       navigate('/');
     }

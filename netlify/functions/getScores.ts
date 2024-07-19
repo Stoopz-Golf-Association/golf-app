@@ -31,7 +31,6 @@ INNER JOIN
 ON 
     golfscores.golfcourse_id = golfcourses.golfcourse_id;
 `;
-  console.log(scores);
 
   return {
     statusCode: 200,

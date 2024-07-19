@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table, Title, Group, Stack, Avatar } from '@mantine/core';
 import ScoreFeed from '../components/ScoreFeed';
+
 // import '@mantine/core/styles.css'; //import Mantine V7 styles needed by MRT
 // import '@mantine/dates/styles.css'; //if using mantine date picker features
 // import 'mantine-react-table/styles.css'; //import MRT styles
@@ -110,7 +111,7 @@ function PlayerTable() {
         <Table.Td c="#119C3F">
           {player.avgStrokes ? player.avgStrokes.toFixed(2) : '-'}
         </Table.Td>
-        <Table.Td>
+        <Table.Td c="red">
           {player.strokesAgainstPar ? player.strokesAgainstPar.toFixed(2) : '-'}
         </Table.Td>
         <Table.Td>{player.rounds}</Table.Td>
@@ -127,7 +128,7 @@ function PlayerTable() {
               <Table.Tr>
                 <Table.Th>Rank</Table.Th>
                 <Table.Th>Player Name</Table.Th>
-                <Table.Th c="#119C3F">AVG</Table.Th>
+                <Table.Th>AVG</Table.Th>
                 <Table.Th>Handicap</Table.Th>
 
                 <Table.Th>Total Rounds</Table.Th>

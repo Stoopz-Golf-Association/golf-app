@@ -1,5 +1,6 @@
 import React from 'react';
 import { DateInput } from '@mantine/dates';
+import dayjs from 'dayjs';
 
 interface DateInputProps {
   date: Date | null;
@@ -13,6 +14,9 @@ const InputDate: React.FC<DateInputProps> = ({ date, setDate }) => {
       onChange={setDate}
       label="Date of Round"
       placeholder="Input Date"
+      maxDate={dayjs(new Date()).add(0, 'day').toDate()}
+      clearable
+      defaultValue={new Date()}
     />
   );
 };
