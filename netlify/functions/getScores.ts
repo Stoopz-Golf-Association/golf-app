@@ -16,7 +16,19 @@ const handler: Handler = async () => {
 
   const scores = await sql`
   
- SELECT player, score, player_id FROM golfscores;
+SELECT 
+    player, 
+    score, 
+    par, 
+    location,
+    course_name,
+    golfscores.golfcourse_id 
+FROM 
+    golfscores 
+INNER JOIN 
+    golfcourses 
+ON 
+    golfscores.golfcourse_id = golfcourses.golfcourse_id;
 `;
   console.log(scores);
 

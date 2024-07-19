@@ -1,10 +1,16 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Table, Title, Space, Group, Stack, Container } from '@mantine/core';
+import { Table, Title, Space, Group, Stack } from '@mantine/core';
+import ScoreFeed from '../components/ScoreFeed';
+// import '@mantine/core/styles.css'; //import Mantine V7 styles needed by MRT
+// import '@mantine/dates/styles.css'; //if using mantine date picker features
+// import 'mantine-react-table/styles.css'; //import MRT styles
+// import { MantineReactTable, useMantineReactTable } from 'mantine-react-table';
 
 type PlayerScore = {
   player: string;
   score: number;
+  par: string;
 };
 
 function PlayerTable() {
@@ -23,34 +29,48 @@ function PlayerTable() {
     fetchScores();
   }, [setAllPlayerScores]);
 
-  const groupedScores: { [player: string]: number[] } = allPlayerScores.reduce(
-    (acc, curr) => {
+  const groupedScores: { [player: string]: [{ score: number; par: number }] } =
+    allPlayerScores.reduce((acc, curr) => {
       if (!acc[curr.player]) {
-        acc[curr.player] = [];
+        acc[curr.player] = [
+          {
+            score: Number(curr.score),
+            par: Number(curr.par),
+          },
+        ];
+      } else {
+        acc[curr.player].push({
+          score: Number(curr.score),
+          par: Number(curr.par),
+        });
       }
-      acc[curr.player].push(Number(curr.score));
       return acc;
-    },
-    {} as { [player: string]: number[] }
-  );
+    }, {} as { [player: string]: [{ score: number; par: number }] });
 
   const playerNames = Object.keys(groupedScores).map((player) => {
     const scores = groupedScores[player];
-    const score =
-      scores.reduce((acc, curr) => acc + Number(curr), 0) / scores.length;
+
+    const strokesAgainstPar =
+      scores.reduce((acc, curr) => acc + (curr.score - curr.par), 0) /
+      scores.length;
+    const avgStrokes =
+      scores.reduce((acc, curr) => acc + curr.score, 0) / scores.length;
     return {
       player,
-      score,
+      strokesAgainstPar,
+      avgStrokes,
       rounds: scores.length,
     };
   });
 
   const rows = playerNames
     ?.sort((a, b) => {
-      if (isNaN(a.score)) {
-        return isNaN(b.score) ? 1 : b.score;
+      if (isNaN(a.strokesAgainstPar)) {
+        return isNaN(b.strokesAgainstPar) ? 1 : b.strokesAgainstPar;
       } else {
-        return isNaN(b.score) ? -1 : a.score - b.score;
+        return isNaN(b.strokesAgainstPar)
+          ? -1
+          : a.strokesAgainstPar - b.strokesAgainstPar;
       }
     })
     .map((player, index) => (
@@ -58,7 +78,10 @@ function PlayerTable() {
         <Table.Td>{index + 1}</Table.Td>
         <Table.Td>{player.player}</Table.Td>
         <Table.Td c="#119C3F">
-          {player.score ? player.score.toFixed(2) : '-'}
+          {player.avgStrokes ? player.avgStrokes.toFixed(2) : '-'}
+        </Table.Td>
+        <Table.Td>
+          {player.strokesAgainstPar ? player.strokesAgainstPar.toFixed(2) : '-'}
         </Table.Td>
         <Table.Td>{player.rounds}</Table.Td>
       </Table.Tr>
@@ -66,11 +89,8 @@ function PlayerTable() {
 
   return (
     <>
-      <Container>
-        <Title order={2}>Leaderboard</Title>
-      </Container>
-
       <Stack h={800} bg="var(--mantine-color-body)" align="center">
+        <Title order={2}>Leaderboard</Title>
         <Group justify="center" gap="sm">
           <Space h="md" />
           <Table highlightOnHover horizontalSpacing="xl">
@@ -79,6 +99,7 @@ function PlayerTable() {
                 <Table.Th>Rank</Table.Th>
                 <Table.Th>Player Name</Table.Th>
                 <Table.Th c="#119C3F">AVG</Table.Th>
+                <Table.Th>VS Par</Table.Th>
 
                 <Table.Th>Total Rounds</Table.Th>
               </Table.Tr>
@@ -86,6 +107,7 @@ function PlayerTable() {
             <Table.Tbody>{rows}</Table.Tbody>
           </Table>
         </Group>
+        <ScoreFeed />
       </Stack>
     </>
   );
