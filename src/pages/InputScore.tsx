@@ -85,19 +85,19 @@ function InputScore() {
 
         <Group justify="center">
           {step !== 1 && (
-            <Button variant="outline" onClick={handleBack}>
+            <Button color="#01457a" variant="outline" onClick={handleBack}>
               back
             </Button>
           )}
 
           {step < 4 && (
-            <Button variant="filled" onClick={handleNext}>
+            <Button color="#01457a" variant="filled" onClick={handleNext}>
               Next
             </Button>
           )}
 
           {step === 4 && (
-            <Button variant="filled" onClick={handleSubmit}>
+            <Button color="#01457a" variant="filled" onClick={handleSubmit}>
               Submit
             </Button>
           )}

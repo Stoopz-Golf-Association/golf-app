@@ -64,7 +64,9 @@ export function Header() {
                   </a>
                 </Button>
 
-                <Button onClick={handleSignUpClick}>Sign up</Button>
+                <Button color="#01457a" onClick={handleSignUpClick}>
+                  Sign up
+                </Button>
               </>
             )}
           </Group>

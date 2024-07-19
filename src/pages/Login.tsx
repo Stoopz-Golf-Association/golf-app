@@ -73,10 +73,10 @@ function Login() {
           value={password}
         />
 
-        <Button variant="default" onClick={handleSubmit}>
+        <Button color="#01457a" variant="default" onClick={handleSubmit}>
           Login
         </Button>
-        <Button variant="filled" onClick={handleSignUpClick}>
+        <Button color="#01457a" variant="filled" onClick={handleSignUpClick}>
           Sign Up
         </Button>
       </Stack>

@@ -13,6 +13,7 @@ function SelectPlayers({ numPlayers, playerNames, setPlayerNames }: Props) {
     <MultiSelect
       label="Select Players"
       placeholder="Select Players"
+      color="#01457a"
       data={[
         'Stokes',
         'JP',

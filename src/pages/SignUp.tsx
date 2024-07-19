@@ -61,7 +61,7 @@ function SignUp() {
           value={rePassword}
         />
 
-        <Button variant="filled" onClick={handleSubmit}>
+        <Button color="#01457a" variant="filled" onClick={handleSubmit}>
           Submit
         </Button>
       </Stack>

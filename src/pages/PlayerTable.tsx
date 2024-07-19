@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Table, Title, Space, Group, Stack } from '@mantine/core';
+import { Table, Title, Group, Stack } from '@mantine/core';
 import ScoreFeed from '../components/ScoreFeed';
 // import '@mantine/core/styles.css'; //import Mantine V7 styles needed by MRT
 // import '@mantine/dates/styles.css'; //if using mantine date picker features
@@ -89,17 +89,16 @@ function PlayerTable() {
 
   return (
     <>
-      <Stack h={800} bg="var(--mantine-color-body)" align="center">
+      <Stack h={800} bg="var(--mantine-color-body)" align="center" gap="xl">
         <Title order={2}>Leaderboard</Title>
-        <Group justify="center" gap="sm">
-          <Space h="md" />
+        <Group justify="center">
           <Table highlightOnHover horizontalSpacing="xl">
             <Table.Thead>
               <Table.Tr>
                 <Table.Th>Rank</Table.Th>
                 <Table.Th>Player Name</Table.Th>
                 <Table.Th c="#119C3F">AVG</Table.Th>
-                <Table.Th>VS Par</Table.Th>
+                <Table.Th>Handicap</Table.Th>
 
                 <Table.Th>Total Rounds</Table.Th>
               </Table.Tr>
