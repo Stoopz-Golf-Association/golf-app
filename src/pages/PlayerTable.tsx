@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Table, Title, Group, Stack } from '@mantine/core';
+import { Table, Title, Group, Stack, Avatar } from '@mantine/core';
 import ScoreFeed from '../components/ScoreFeed';
 // import '@mantine/core/styles.css'; //import Mantine V7 styles needed by MRT
 // import '@mantine/dates/styles.css'; //if using mantine date picker features
@@ -11,6 +11,26 @@ type PlayerScore = {
   player: string;
   score: number;
   par: string;
+};
+
+const stokesHeadshot = '/headshots/StokesAIHeadshot.png';
+const jpHeadshot = '/headshots/JPHeadshot.jpg';
+const sammyTHeadshot = '/headshots/SammyTHeadshot.jpeg';
+const booshHeadshot = '/headshots/BooshHeadshot.jpeg';
+const jesseHeadshot = 'headshots/JesseProctor.jpeg';
+const bouxHeadshot = '/headshots/BouxHeadshot.jpeg';
+const loganHeadshot = '/headshots/LoganHeadshot1.png';
+const codyHeadshot = '/headshots/CodyHeadshot.jpeg';
+
+const playerAvatars = {
+  Stokes: stokesHeadshot,
+  JP: jpHeadshot,
+  'Sammy T': sammyTHeadshot,
+  Boosh: booshHeadshot,
+  Jesse: jesseHeadshot,
+  Boux: bouxHeadshot,
+  Logan: loganHeadshot,
+  Cojack: codyHeadshot,
 };
 
 function PlayerTable() {
@@ -76,7 +96,12 @@ function PlayerTable() {
     .map((player, index) => (
       <Table.Tr>
         <Table.Td>{index + 1}</Table.Td>
-        <Table.Td>{player.player}</Table.Td>
+        <Table.Td>
+          <Group>
+            <Avatar name={player.player} src={playerAvatars[player.player]} />
+            {player.player}
+          </Group>
+        </Table.Td>
         <Table.Td c="#119C3F">
           {player.avgStrokes ? player.avgStrokes.toFixed(2) : '-'}
         </Table.Td>
