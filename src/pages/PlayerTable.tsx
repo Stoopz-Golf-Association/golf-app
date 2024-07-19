@@ -13,6 +13,10 @@ type PlayerScore = {
   par: string;
 };
 
+type PlayerAvatars = {
+  [key: string]: string;
+};
+
 const stokesHeadshot = '/headshots/StokesAIHeadshot.png';
 const jpHeadshot = '/headshots/JPHeadshot.jpg';
 const sammyTHeadshot = '/headshots/SammyTHeadshot.jpeg';
@@ -22,7 +26,7 @@ const bouxHeadshot = '/headshots/BouxHeadshot.jpeg';
 const loganHeadshot = '/headshots/LoganHeadshot1.png';
 const codyHeadshot = '/headshots/CodyHeadshot.jpeg';
 
-const playerAvatars = {
+const playerAvatars: PlayerAvatars = {
   Stokes: stokesHeadshot,
   JP: jpHeadshot,
   'Sammy T': sammyTHeadshot,
