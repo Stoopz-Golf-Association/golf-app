@@ -5,6 +5,7 @@ import { SelectPlayers } from '../components/SelectPlayers';
 import { PlayerScores } from '../components/PlayerScores';
 import { useState } from 'react';
 import GolfCourse from '../components/GolfCourse';
+import InputDate from '../components/InputDate';
 
 import axios from 'axios';
 
@@ -18,6 +19,7 @@ function InputScore() {
     value: '',
     id: 0,
   });
+  const [date, setDate] = useState<Date | null>(null);
 
   const handleSubmit = async () => {
     let isValid = true;
@@ -33,6 +35,7 @@ function InputScore() {
           player: player,
           score: playerScores?.[player],
           golfCourseId: golfCourse.id,
+          date: date,
         };
       });
 
@@ -50,6 +53,9 @@ function InputScore() {
       setStep((prevStep) => prevStep + 1);
     }
     if (step === 3 && playerNames.length === Number(numPlayers)) {
+      setStep((prevStep) => prevStep + 1);
+    }
+    if (step === 4 && playerNames.length === Number(numPlayers)) {
       setStep((prevStep) => prevStep + 1);
     }
   };
@@ -70,18 +76,18 @@ function InputScore() {
             setPlayerNames={setPlayerNames}
           />
         )}
-
         {step === 3 && (
-          <GolfCourse golfCourse={golfCourse} setGolfCourse={setGolfCourse} />
-        )}
-
-        {step === 4 && (
           <PlayerScores
             playerNames={playerNames}
             playerScores={playerScores}
             setPlayerScores={setPlayerScores}
           />
         )}
+
+        {step === 4 && (
+          <GolfCourse golfCourse={golfCourse} setGolfCourse={setGolfCourse} />
+        )}
+        {step === 5 && <InputDate date={date} setDate={setDate} />}
 
         <Group justify="center">
           {step !== 1 && (
@@ -90,13 +96,13 @@ function InputScore() {
             </Button>
           )}
 
-          {step < 4 && (
+          {step < 5 && (
             <Button color="#01457a" variant="filled" onClick={handleNext}>
               Next
             </Button>
           )}
 
-          {step === 4 && (
+          {step === 5 && (
             <Button color="#01457a" variant="filled" onClick={handleSubmit}>
               Submit
             </Button>

@@ -25,9 +25,9 @@ const handler: Handler = async (event) => {
 
   for await (const score of scores) {
     await sql`
-    INSERT INTO golfscores (player, score, golfcourse_id)
+    INSERT INTO golfscores (player, score, golfcourse_id, date)
     values
-  (${score.player}, ${score.score},  ${score.golfCourseId})
+  (${score.player}, ${score.score},  ${score.golfCourseId}, ${score.date})
    `;
   }
 

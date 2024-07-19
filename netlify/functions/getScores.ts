@@ -22,6 +22,7 @@ SELECT
     par, 
     location,
     course_name,
+    date,
     golfscores.golfcourse_id 
 FROM 
     golfscores 

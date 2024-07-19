@@ -15,6 +15,7 @@ import { PrivateRoute } from './components/PrivateRoute.tsx';
 import { create } from 'zustand';
 import { Header } from './components/Header.tsx';
 import { AuthProvider } from './components/AuthProvider.tsx';
+import '@mantine/dates/styles.css';
 
 interface StoreState {
   isAuthenticated: boolean;

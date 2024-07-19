@@ -11,6 +11,7 @@ type PlayerScore = {
   player: string;
   score: number;
   par: string;
+  date: Date | null;
 };
 
 type PlayerAvatars = {
