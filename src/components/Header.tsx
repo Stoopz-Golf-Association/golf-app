@@ -39,7 +39,7 @@ export function Header() {
 
           <Group h="100%" gap={0} visibleFrom="sm">
             <a href="/about" className={classes.link}>
-              About
+              How It Works
             </a>
             <a href="/" className={classes.link}>
               Leaderboard
