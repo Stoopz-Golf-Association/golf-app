@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useStore } from '../main';
+import { Loader } from '@mantine/core';
 
 interface User {
   id: string;
@@ -36,7 +37,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, [setIsAuthenticated, setUser]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader type="bars" color="#01457a" />;
   }
 
   return children;
