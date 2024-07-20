@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Table, Title, Group, Stack, Avatar } from '@mantine/core';
+import { Table, Title, Group, Stack, Avatar, Loader } from '@mantine/core';
 import ScoreFeed from '../components/ScoreFeed';
 
 // import '@mantine/core/styles.css'; //import Mantine V7 styles needed by MRT
@@ -8,11 +8,13 @@ import ScoreFeed from '../components/ScoreFeed';
 // import 'mantine-react-table/styles.css'; //import MRT styles
 // import { MantineReactTable, useMantineReactTable } from 'mantine-react-table';
 
-type PlayerScore = {
+export type PlayerScore = {
   player: string;
   score: number;
+  course_name: string;
+  location: string;
+  date: string;
   par: string;
-  date: Date | null;
 };
 
 type PlayerAvatars = {
@@ -41,14 +43,19 @@ const playerAvatars: PlayerAvatars = {
 
 function PlayerTable() {
   const [allPlayerScores, setAllPlayerScores] = useState<PlayerScore[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchScores = async () => {
       try {
+        setIsLoading(true);
+
         const result = await axios.get(`/.netlify/functions/getScores`);
         setAllPlayerScores(result.data.scores);
       } catch (error) {
         console.error('Error fetching scores:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -123,21 +130,26 @@ function PlayerTable() {
       <Stack h={800} bg="var(--mantine-color-body)" align="center" gap="xl">
         <Title order={2}>Leaderboard</Title>
         <Group justify="center">
-          <Table highlightOnHover horizontalSpacing="xl">
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th>Rank</Table.Th>
-                <Table.Th>Player Name</Table.Th>
-                <Table.Th>AVG</Table.Th>
-                <Table.Th>Handicap</Table.Th>
+          {isLoading ? (
+            <Loader type="bars" color="#01457a" />
+          ) : (
+            <Table highlightOnHover horizontalSpacing="xl">
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>Rank</Table.Th>
+                  <Table.Th>Player Name</Table.Th>
+                  <Table.Th>AVG</Table.Th>
+                  <Table.Th>Handicap</Table.Th>
 
-                <Table.Th>Total Rounds</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>{rows}</Table.Tbody>
-          </Table>
+                  <Table.Th>Total Rounds</Table.Th>
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>{rows}</Table.Tbody>
+            </Table>
+          )}
         </Group>
-        <ScoreFeed />
+
+        <ScoreFeed scores={allPlayerScores.slice(-7).reverse()} />
       </Stack>
     </>
   );

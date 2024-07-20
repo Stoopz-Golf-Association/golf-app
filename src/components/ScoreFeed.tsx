@@ -1,14 +1,5 @@
-import { useEffect, useState } from 'react';
 import { Title, Text } from '@mantine/core';
-import axios from 'axios';
-
-type PlayerScore = {
-  player: string;
-  score: number;
-  course_name: string;
-  location: string;
-  date: string;
-};
+import { PlayerScore } from '../pages/PlayerTable';
 
 const formatDate = (isoDateString: string): string => {
   const date = new Date(isoDateString);
@@ -20,34 +11,18 @@ const formatDate = (isoDateString: string): string => {
   return `${month}/${day}/${year}`;
 };
 
-function ScoreFeed() {
-  const [playerFeed, setPlayerFeed] = useState<PlayerScore[]>([]);
-  useEffect(() => {
-    const fetchScores = async () => {
-      try {
-        const result = await axios.get(`/.netlify/functions/getScores`);
-        setPlayerFeed(result.data.scores.slice(-7).reverse());
-      } catch (error) {
-        console.error('Error fetching scores:', error);
-      }
-    };
-
-    fetchScores();
-  }, [setPlayerFeed]);
-
-  console.log(playerFeed);
+const ScoreFeed = ({ scores }: { scores: PlayerScore[] }) => {
   return (
     <>
       <Title order={2}>Score Feed</Title>
-      {playerFeed.map((round) => {
-        return (
-          <Text size="md">
-            {round.player} shot a {round.score} at {round.course_name} in{' '}
-            {round.location} on {formatDate(round.date)}.
-          </Text>
-        );
-      })}
+      {scores.map((round, index) => (
+        <Text key={index} size="md">
+          {round.player} shot a {round.score} at {round.course_name} in{' '}
+          {round.location} on {formatDate(round.date)}.
+        </Text>
+      ))}
     </>
   );
-}
+};
+
 export default ScoreFeed;
