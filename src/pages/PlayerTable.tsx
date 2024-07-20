@@ -130,7 +130,7 @@ function PlayerTable() {
       <Title order={2}>Leaderboard</Title>
       <Group justify="center">
         {isLoading ? (
-          <Loader type="bars" color="#01457a" />
+          <Loader type="bars" color="#01457a" size="lg" />
         ) : (
           <Table highlightOnHover horizontalSpacing="xl">
             <Table.Thead>
