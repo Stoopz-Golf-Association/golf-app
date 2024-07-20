@@ -38,6 +38,9 @@ export function Header() {
           </a>
 
           <Group h="100%" gap={0} visibleFrom="sm">
+            <a href="/about" className={classes.link}>
+              About
+            </a>
             <a href="/" className={classes.link}>
               Leaderboard
             </a>

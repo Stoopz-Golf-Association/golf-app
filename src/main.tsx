@@ -5,6 +5,7 @@ import InputScore from './pages/InputScore.tsx';
 import { PlayerTable } from './pages/PlayerTable.tsx';
 import Login from './pages/Login.tsx';
 import SignUp from './pages/SignUp.tsx';
+import About from './pages/About.tsx';
 import '@mantine/core/styles.css';
 import {
   MantineProvider,
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <SignUp />,
+      },
+      {
+        path: '/about',
+        element: <About />,
       },
     ],
   },
