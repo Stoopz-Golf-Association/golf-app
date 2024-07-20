@@ -126,32 +126,30 @@ function PlayerTable() {
     ));
 
   return (
-    <>
-      <Stack h={800} bg="var(--mantine-color-body)" align="center" gap="xl">
-        <Title order={2}>Leaderboard</Title>
-        <Group justify="center">
-          {isLoading ? (
-            <Loader type="bars" color="#01457a" />
-          ) : (
-            <Table highlightOnHover horizontalSpacing="xl">
-              <Table.Thead>
-                <Table.Tr>
-                  <Table.Th>Rank</Table.Th>
-                  <Table.Th>Player Name</Table.Th>
-                  <Table.Th>AVG</Table.Th>
-                  <Table.Th>Handicap</Table.Th>
+    <Stack bg="var(--mantine-color-body)" align="center" gap="xl" mb="xl">
+      <Title order={2}>Leaderboard</Title>
+      <Group justify="center">
+        {isLoading ? (
+          <Loader type="bars" color="#01457a" />
+        ) : (
+          <Table highlightOnHover horizontalSpacing="xl">
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th>Rank</Table.Th>
+                <Table.Th>Player Name</Table.Th>
+                <Table.Th>AVG</Table.Th>
+                <Table.Th>Handicap</Table.Th>
 
-                  <Table.Th>Total Rounds</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>{rows}</Table.Tbody>
-            </Table>
-          )}
-        </Group>
+                <Table.Th>Total Rounds</Table.Th>
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>{rows}</Table.Tbody>
+          </Table>
+        )}
+      </Group>
 
-        <ScoreFeed scores={allPlayerScores.slice(-7).reverse()} />
-      </Stack>
-    </>
+      <ScoreFeed scores={allPlayerScores.slice(-7).reverse()} />
+    </Stack>
   );
 }
 export { PlayerTable };

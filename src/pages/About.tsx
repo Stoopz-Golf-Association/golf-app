@@ -55,11 +55,34 @@ function About() {
 
                 <ListItem>
                   <Group>
-                    <Text fw={700}>Post Scores:</Text>Follow the "Post Scores"
-                    directions to input your scores after each round.
+                    <Text fw={700}>Select Players:</Text> Choose the number of
+                    players and then select the players from your group.
+                  </Group>
+                </ListItem>
+
+                <ListItem>
+                  <Group>
+                    <Text fw={700}>Input Scores:</Text>Enter each player's score
+                    for the round.
+                  </Group>
+                </ListItem>
+                <ListItem>
+                  <Group>
+                    <Text fw={700}>Select Course:</Text>Choose the golf course
+                    where the round was played.
+                  </Group>
+                </ListItem>
+                <ListItem>
+                  <Group>
+                    <Text fw={700}>Enter Date:</Text>Select the date of the
+                    round.
                   </Group>
                 </ListItem>
               </List>
+            </Text>
+            <Text>
+              Stoopz.golf takes care of the rest, ensuring your scores are
+              accurately entered into the leaderboard.
             </Text>
             <Title order={4}>Why Choose Stoopz.golf?</Title>
             <Text>
