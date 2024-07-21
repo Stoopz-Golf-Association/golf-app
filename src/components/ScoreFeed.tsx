@@ -1,4 +1,4 @@
-import { Title, Text, Stack, Paper } from '@mantine/core';
+import { Title, Text } from '@mantine/core';
 import { PlayerScore } from '../pages/PlayerTable';
 
 const formatDate = (isoDateString: string): string => {
