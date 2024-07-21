@@ -108,8 +108,8 @@ function PlayerTable() {
     })
     .map((player, index) => (
       <Table.Tr>
-        <Table.Td>{index + 1}</Table.Td>
-        <Table.Td>
+        <Table.Td c="#01457a">{index + 1}</Table.Td>
+        <Table.Td c="#01457a">
           <Group>
             <Avatar name={player.player} src={playerAvatars[player.player]} />
             {player.player}
@@ -121,20 +121,22 @@ function PlayerTable() {
         <Table.Td c="red">
           {player.strokesAgainstPar ? player.strokesAgainstPar.toFixed(2) : '-'}
         </Table.Td>
-        <Table.Td>{player.rounds}</Table.Td>
+        <Table.Td c="#01457a">{player.rounds}</Table.Td>
       </Table.Tr>
     ));
 
   return (
     <Stack bg="var(--mantine-color-body)" align="center" gap="xl" mb="xl">
-      <Title order={2}>Leaderboard</Title>
+      <Title c="#01457a" order={2}>
+        Leaderboard
+      </Title>
       <Group justify="center">
         {isLoading ? (
           <Loader type="bars" color="#01457a" size="lg" />
         ) : (
           <Table highlightOnHover horizontalSpacing="xl">
             <Table.Thead>
-              <Table.Tr>
+              <Table.Tr c="#01457a">
                 <Table.Th>Rank</Table.Th>
                 <Table.Th>Player Name</Table.Th>
                 <Table.Th>AVG</Table.Th>

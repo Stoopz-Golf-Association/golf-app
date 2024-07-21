@@ -17,6 +17,7 @@ import { create } from 'zustand';
 import { Header } from './components/Header.tsx';
 import { AuthProvider } from './components/AuthProvider.tsx';
 import '@mantine/dates/styles.css';
+import CreateLeague from './pages/CreateLeague.tsx';
 
 interface StoreState {
   isAuthenticated: boolean;
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <PlayerTable />,
+      },
+      {
+        path: '/create-league',
+        element: <CreateLeague />,
       },
       {
         path: '/login',

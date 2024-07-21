@@ -1,4 +1,4 @@
-import { Title, Text } from '@mantine/core';
+import { Title, Text, Stack, Paper } from '@mantine/core';
 import { PlayerScore } from '../pages/PlayerTable';
 
 const formatDate = (isoDateString: string): string => {
@@ -14,9 +14,12 @@ const formatDate = (isoDateString: string): string => {
 const ScoreFeed = ({ scores }: { scores: PlayerScore[] }) => {
   return (
     <>
-      <Title order={2}>Score Feed</Title>
+      <Title c="#01457a" order={2}>
+        Score Feed
+      </Title>
+
       {scores.map((round, index) => (
-        <Text key={index} size="md">
+        <Text c="#01457a" key={index} size="md">
           {round.player} shot a {round.score} at {round.course_name} in{' '}
           {round.location} on {formatDate(round.date)}.
         </Text>
