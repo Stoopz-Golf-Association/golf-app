@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Stack, Avatar, Text, Group, Box, Title } from '@mantine/core';
+import { Card, Stack, Avatar, Text, Group, Title, Box } from '@mantine/core';
 import {
   IconCircleNumber1Filled,
   IconCircleNumber2Filled,
@@ -91,9 +91,13 @@ const BestScores: React.FC<BestScoresProps> = ({
               {player.score}
             </Text>
           </Group>
-          <Text c="#01457a" fw={100}>
-            {player.course_name}
-          </Text>
+
+          <Box w={200}>
+            <Text truncate="end" c="#01457a" fw={100} ta="center">
+              {player.course_name}
+            </Text>
+          </Box>
+
           <Text c="#01457a" fw={100}>
             {FormatDate(player.date)}
           </Text>

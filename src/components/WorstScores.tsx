@@ -79,9 +79,11 @@ const WorstScores: React.FC<WorstScoresProps> = ({
               </Text>
             </Group>
 
-            <Text c="#01457a" fw={100}>
-              {player.course_name}
-            </Text>
+            <Box w={200}>
+              <Text truncate="end" c="#01457a" fw={100} ta="center">
+                {player.course_name}
+              </Text>
+            </Box>
 
             <Text c="#01457a" fw={100}>
               {FormatDate(player.date)}

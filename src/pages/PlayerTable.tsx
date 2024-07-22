@@ -72,7 +72,6 @@ function PlayerTable() {
         allPlayerScores={allPlayerScores}
         playerAvatars={playerAvatars}
       />
-
       <ScoreFeed scores={allPlayerScores.slice(-7).reverse()} />
     </Stack>
   );
