@@ -6,6 +6,7 @@ import {
   IconCircleNumber3Filled,
 } from '@tabler/icons-react';
 import { PlayerScore } from './PlayerTable';
+import FormatDate from '../Utilities/FormatDate';
 
 type BestScoresProps = {
   allPlayerScores: PlayerScore[];
@@ -94,7 +95,7 @@ const BestScores: React.FC<BestScoresProps> = ({
             {player.course_name}
           </Text>
           <Text c="#01457a" fw={100}>
-            {player.date}
+            {FormatDate(player.date)}
           </Text>
         </Stack>
       </Stack>

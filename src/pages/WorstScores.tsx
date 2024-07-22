@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Stack, Avatar, Text, Group, Box, Title } from '@mantine/core';
 import { IconThumbDown } from '@tabler/icons-react';
 import { PlayerScore } from './PlayerTable';
+import FormatDate from '../Utilities/FormatDate';
 
 type WorstScoresProps = {
   allPlayerScores: PlayerScore[];
@@ -83,7 +84,7 @@ const WorstScores: React.FC<WorstScoresProps> = ({
             </Text>
 
             <Text c="#01457a" fw={100}>
-              {player.date}
+              {FormatDate(player.date)}
             </Text>
           </Stack>
         </Stack>
@@ -92,7 +93,7 @@ const WorstScores: React.FC<WorstScoresProps> = ({
   });
   return (
     <>
-      <Title c="#01457a" order={2}>
+      <Title c="red" order={2}>
         Worst Scores
       </Title>
       <Group gap="xl">{bottomThreeScorers}</Group>
