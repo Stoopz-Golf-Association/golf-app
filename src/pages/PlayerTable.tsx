@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table, Title, Group, Stack, Avatar, Loader } from '@mantine/core';
-import ScoreFeed from '../components/ScoreFeed';
 
-// import '@mantine/core/styles.css'; //import Mantine V7 styles needed by MRT
-// import '@mantine/dates/styles.css'; //if using mantine date picker features
-// import 'mantine-react-table/styles.css'; //import MRT styles
-// import { MantineReactTable, useMantineReactTable } from 'mantine-react-table';
+import ScoreFeed from '../components/ScoreFeed';
+import BestScores from './BestScores';
+import WorstScores from './WorstScores';
 
 export type PlayerScore = {
   player: string;
@@ -15,9 +13,10 @@ export type PlayerScore = {
   location: string;
   date: string;
   par: string;
+  diff: number;
 };
 
-type PlayerAvatars = {
+export type PlayerAvatars = {
   [key: string]: string;
 };
 
@@ -69,16 +68,22 @@ function PlayerTable() {
           {
             score: Number(curr.score),
             par: Number(curr.par),
+            courseName: curr.course_name,
+            diff: Number(curr.score) - Number(curr.par),
+            date: curr.date,
           },
         ];
       } else {
         acc[curr.player].push({
           score: Number(curr.score),
           par: Number(curr.par),
+          courseName: curr.course_name,
+          diff: Number(curr.score) - Number(curr.par),
+          date: curr.date,
         });
       }
       return acc;
-    }, {} as { [player: string]: [{ score: number; par: number }] });
+    }, {} as { [player: string]: [{ score: number; par: number; courseName: string; diff: number; date: string }] });
 
   const playerNames = Object.keys(groupedScores).map((player) => {
     const scores = groupedScores[player];
@@ -149,6 +154,15 @@ function PlayerTable() {
           </Table>
         )}
       </Group>
+
+      <BestScores
+        allPlayerScores={allPlayerScores}
+        playerAvatars={playerAvatars}
+      />
+      <WorstScores
+        allPlayerScores={allPlayerScores}
+        playerAvatars={playerAvatars}
+      />
 
       <ScoreFeed scores={allPlayerScores.slice(-7).reverse()} />
     </Stack>
