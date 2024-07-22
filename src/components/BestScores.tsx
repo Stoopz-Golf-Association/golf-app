@@ -5,7 +5,7 @@ import {
   IconCircleNumber2Filled,
   IconCircleNumber3Filled,
 } from '@tabler/icons-react';
-import { PlayerScore } from './PlayerTable';
+import { PlayerScore } from '../pages/PlayerTable';
 import FormatDate from '../Utilities/FormatDate';
 
 type BestScoresProps = {

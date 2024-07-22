@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Stack, Avatar, Text, Group, Box, Title } from '@mantine/core';
 import { IconThumbDown } from '@tabler/icons-react';
-import { PlayerScore } from './PlayerTable';
+import { PlayerScore } from '../pages/PlayerTable';
 import FormatDate from '../Utilities/FormatDate';
 
 type WorstScoresProps = {
